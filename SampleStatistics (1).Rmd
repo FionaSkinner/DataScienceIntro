@@ -1,0 +1,161 @@
+---
+title: "Sample statistics"
+author: "Kim Roth"
+date: "10/4/2017"
+output: html_document
+---
+
+In this activity, we will make sure everyone knows the terms surronding sampling and sample statistics. Additionally we will learn how to compute them in R.
+
+Libaries for today
+```{r}
+library(mosaic)
+library(tidyverse)
+library(gapminder)
+```
+
+Some of these questions you may already know the answer to, if you do not you may look at other resources including your book and an introduction to statistics book of your choice (see https://www.openintro.org or http://moderndive.com/A-appendixA.html#basic-statistical-terms for a free option) 
+
+Give definitions beyond formulas for terms. You do not even need to include the formulas unless desired. Cite your sources if using someone's definition.
+
+
+Samples and population: statistics and parameters
+
+1. Define the following
+a. Sample- A set of data collected from a population
+b. Population- the pool that a data sample is taken from
+c. n- the number of cases that you are working with 
+d. Sample statistic- a descriptive measure for a sample http://sphweb.bumc.bu.edu/otlt/MPH-Modules/BS/BS704_BiostatisticsBasics/BS704_BiostatisticsBasics2.html#
+e. Population parameter- describes an entire population
+
+
+Concepts
+2. Why sample? Why not look at the whole population? Taking a sample of a population is more efficicient, and easier to work with and create data graphics with.
+3. Why do we sample randomly or randomly assign conditions? To make the data set that we have as accurate as possible and to avoid just picking the average data.
+
+Practice
+4. For the dataset gapminder, go and find the R documentation in help or by google.
+
+a. How did they get the sample? from the website
+b. What are the cases? the countries
+c. What's n? 142
+d. What are the variables?the continents, years, lifeExp, population, and gdpPercap
+c. What is a possible population related to this sample? Middle class
+
+Measures of center
+5. Define the following
+a. mean- the average for a data set
+b. median- the midpoint of the dataset
+c. mode (which is rarely used in statistics, because it isn't a measure of center sometimes)- the number that appears the most often in a data set
+
+
+
+Concepts.
+6. Why is the mode not always at the center of the data? Because there could be same data points that are skewed to one side that are the same
+7. Why have both mean and median? Are they always the same? Why or why not? Mean and median are not always the same, because the mean accounts for all the numbers in the data set, while the median is just the number that is dead center. It is good to have both numbers because then you know more about the data set. 
+Practice
+8. For the gapminder data set compute the following for a quantitative variable of your choice that is not year. All commands work like statistic( ~variable, data=dataset) 
+a. mean 
+b. median
+```{r}
+mean(~lifeExp, data=gapminder)
+median(~lifeExp, data=gapminder)
+```
+9. Which is larger the median or the mean? Make a graph of the variable and write a sentence about why the larger one is larger.
+```{r}
+ggplot(data=gapminder, mapping= aes(x = median , y = mean ))  + geom_bar(stat="identity")
+```
+
+Other measures of position: quantiles, quartiles, min and max
+10. Define the following
+a. Quantile/Percentile- A certain number that you look at to gain better understanding of the data set. 
+b. First quartile - This number is the average of the data below the overall average for the data set. 
+c. Thrid quartile - The aveage of the data above the overall average for the data set. 
+d. Minimum- the lowest number in a data set
+e. Maximum- the highest number in a data set
+
+Concepts
+11. What are the minimum, first quartile, median, third quartile, and maximum in terms of quantiles/percentiles? This set of numbers is called the five number summary. The minimum is the lowest number in the data set and the maximum is the highest number in the data set. The first quartile is the average of the data below the average of the whole data set. The third quartile is the average of the data above the average of the entire data set. The median is the average of the entire data set(the sum of all the numbers divided by the number of numbers). 
+12. What is the difference between a quantile and a percentile? Quartiles are just when the data set is divided into quarters. The quartile you refer to is just talking about one number, while the percentile refers to that number in that position and all the numbers below. 
+
+Practice
+13. Use favstats to compute the five number summary a quantiative variable of your choice (not year)
+```{r}
+favstats(~ lifeExp,  data= gapminder)
+```
+
+14. Find the 5th percentile and the 95th percentile for the data using qdata, which works like qdata(~variable, p=quantile, data=dataset)
+```{r}
+qdata(~lifeExp , p=.05, data = gapminder)
+```
+
+
+
+Measures of spread: Range, Standard deviation, Intequarile Range
+15. Define the following
+a. Spread (statistical spread) -Describes the variability within a data set. 
+b. Range -The highest number in a data set minus the lowest number in a data set. 
+c. Standard deviation - The number that describes the distance between numbers in a data set. 
+d. Interquartile range. - It is the third quartile minus the first quartile, it takes a measure of the middle 50% of the data set. 
+
+Concepts
+16. Why do we not use range as the usual measure of spread? - Because there may be a variable at one end of the data set that is an outlier and does not accurately describe the data set. 
+
+Practice
+17.Compute the range, interquartile range and standard deviation (sd in R) for your variable.
+```{r}
+
+```
+
+Outliers: Detection methods
+
+There are two common simple statistical methods. Note that particular data may have values dictated by the variable that are unusual outside of statistcs (ex. unreasonable blood pressure values) Also there are more complicated statstical methods for some things.
+
+The two methods are data is more than two standard deviations from the mean or more than 1.5 interquatile ranges from the nearest quartile.
+
+
+For your variable use either the minimum or the maximum of the data.
+18. Is your min or max an outlier by being more than two standard deviations from the mean. Note that standard deviations from the mean are calculuated by doing a z-score (data value-mean)/sd
+```{r}
+
+```
+
+19. Is your min or max and outlier by being more than than 1.5  interquatile ranges from the nearest quartile. The easiest way to do this in r is to make a boxplot. Boxplots mark their outliers using this rule by default.
+```{r}
+
+```
+
+
+Linear models. Best fit lines and their friends
+
+20. Define the following
+a. Statistical model - Provides a way to relate variables to one another.
+b. Linear model - Describes the response variable in relation to the explanatory variables.
+c. Least squares regression line (the most common type of best fit line) - A line of best fit determined by squaring the distance between a data point and the regression line.
+d. predictor - a quantitative explanatory variable 
+e. response - a quantitative outcome 
+f. confounding variables - When other factors may be the determinates of the observed relationship between two factors
+g. correlation - a connection between two or more variables
+Concepts
+21. Why do we make models? What is the goal? In order to visualize data and make it easier to understand. 
+
+Practice
+22. Pick two of the quantiative variables. Make a scatterplot with a line on it (as we did when learning ggplot, it is the best fit line)
+```{r}
+
+```
+
+23. Now look at the line of best fit. The command for making a best fit line is lm, standing for linear model
+lm(response~predictor, data=dataset).
+```{r}
+
+```
+
+24. Write the equation for the line here. How does it match your scatterplot?
+
+
+25. (OPTIONAL) Using the gampminder data make the best linear model for gdp that you can using multiple variables. How are you telling it is the best?
+```{r}
+
+```
+
